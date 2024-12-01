@@ -125,6 +125,9 @@ const api = {
     // Simular un delay en la respuesta de la API
     // await sleep(7500);
 
+    //experimental use with dynamic IO config canary
+    // "use cache";
+
     const [, ...data] = await fetch(gSheetsUrl, { cache: 'force-cache', next: { revalidate: 100, tags: ['restaurants'] }}).then(res => res.text()).then(text => text.split('\n'));
 
     const restaurants: Restaurant[] = data.map((row) => {
