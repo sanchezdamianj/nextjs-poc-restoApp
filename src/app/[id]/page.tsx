@@ -1,6 +1,6 @@
 import api from "@/api";
 import Link from "next/link";
-import RestaurantCard from "../components/RestaurantCard";
+import RestaurantCard from "../(home)/components/RestaurantCard";
 
 // generate Metadata from api response to render a dynamic page
 export async function generateMetadata({params}: {params: Promise<{id: string}>}) {

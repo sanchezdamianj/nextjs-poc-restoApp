@@ -125,7 +125,7 @@ const api = {
     // Simular un delay en la respuesta de la API
     // await sleep(7500);
 
-    const [, ...data] = await fetch(gSheetsUrl).then(res => res.text()).then(text => text.split('\n'));
+    const [, ...data] = await fetch(gSheetsUrl, { cache: 'force-cache', next: { revalidate: 100, tags: ['restaurants'] }}).then(res => res.text()).then(text => text.split('\n'));
 
     const restaurants: Restaurant[] = data.map((row) => {
       const [id, name, description, address, score, ratings, image] = row.split(',')
@@ -159,6 +159,17 @@ const api = {
 
     return restaurant;
   },
+
+  // Search
+  search: async (query: string = ''): Promise<Restaurant[]> => {
+
+    const results = await api.list();
+
+    return results.filter((restaurant) =>
+      restaurant.name.toLowerCase().includes(query.toLowerCase()),
+    );
+  }
+
 };
 
 export default api;
